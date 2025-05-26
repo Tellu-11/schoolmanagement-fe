@@ -11,7 +11,7 @@ export default function Dashboard() {
     <Sidebar />
     <Header />
     
-    <main className="ml-64 pt-16 p-6">
+    <main className="ml-32 pt-16 p-6">
       <div className="max-w-7xl mx-auto mt-8">
         <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
         

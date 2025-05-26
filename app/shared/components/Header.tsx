@@ -3,8 +3,13 @@ import Image from 'next/image';
 
 const Header = () => {
   return (
-    <header className="fixed top-0 right-0 left-64 h-16 bg-white shadow-sm z-10">
+    <header className="fixed top-0 right-0 left-80 h-20 bg-white shadow-sm z-10">
       <div className="h-full px-6 flex items-center justify-between">
+        <div className='felx items-center'>
+          <div className='relative'>
+            <h1 className='text-3xl text-blue-950 font-semibold'>Dashboard</h1>
+          </div>
+        </div>
         <div className="flex items-center">
           <div className="relative">
             <input

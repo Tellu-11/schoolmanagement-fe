@@ -1,37 +1,42 @@
-import React from 'react';
-import Link from 'next/link';
+"use client"
+
+import { fetchDashboardData } from '@/dashboard/repository/dashboardRepository';
+import { useState } from 'react';
 
 const Sidebar = () => {
-  const menuItems = [
-    { icon: '🏠', label: 'Home', path: '/' },
-    { icon: '👨‍💼', label: 'Admin', path: '/admin' },
-    { icon: '👨‍🎓', label: 'Students', path: '/students' },
-    { icon: '👨‍🏫', label: 'Teachers', path: '/teachers' },
-    { icon: '📚', label: 'Library', path: '/library' },
-    { icon: '👤', label: 'Account', path: '/account' },
-    { icon: '🏛️', label: 'Class', path: '/class' },
-    { icon: '📖', label: 'Subject', path: '/subject' },
-    { icon: '📅', label: 'Routine', path: '/routine' },
-    { icon: '📝', label: 'Attendance', path: '/attendance' },
-    { icon: '📋', label: 'Exam', path: '/exam' },
-    { icon: '📢', label: 'Notice', path: '/notice' },
-    { icon: '🚌', label: 'Transport', path: '/transport' },
-    { icon: '🏠', label: 'Hostel', path: '/hostel' }
-  ];
+
+  const menuItems = fetchDashboardData();
+  const [currentMenuIndex, setCurrentMenuIndex] = useState(0);
+
+  function handleMenuClick(index: number) {
+    setCurrentMenuIndex(index); 
+    console.log(currentMenuIndex);
+    
+  }
 
   return (
-    <aside className="w-64 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
-      <div className="p-4">
-        <h1 className="text-2xl font-bold text-purple-600 mb-8">SCM Academy</h1>
+    <aside className="w-80 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
+      <div className="p-4 pt-12">
+        <div className="flex items-center justify-center">
+          <img src="/image/GraduationCap.png" alt="" height={45} width={45} className='mr-2'/>
+          <h1 className="text-5xl text-center text-blue-950 font-bold">SMS</h1>
+        </div>
+        <p className="text-base text-center text-gray-500 font-medium mb-8">School Management System</p>
         <nav>
           {menuItems.map((item, index) => (
-            <Link
+            <button
               key={index}
-              href={item.path}
-              className="flex items-center p-3 text-gray-700 hover:bg-purple-50 rounded-lg mb-2 transition-colors">
+              onClick={() => 
+                handleMenuClick(index)
+              }
+              className={`flex w-full items-center p-3 text-base font-semibold rounded-lg mb-2 transition-colors
+                ${currentMenuIndex === index
+                  ? 'bg-red-400 text-white' 
+                  : 'text-gray-500 hover:bg-purple-50'}
+              `}>
               <span className="mr-3">{item.icon}</span>
               <span>{item.label}</span>
-            </Link>
+            </button>
           ))}
         </nav>
       </div>

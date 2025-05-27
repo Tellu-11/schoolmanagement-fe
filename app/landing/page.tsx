@@ -5,7 +5,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className='max-w-full mx-auto px-4 flex items-center justify-between border-b-1 border-red-400 py-4'>
-        <p className='text-2xl font-semibold'>
+        <Image src={"/image/graduate-hat.png"} alt="Logo" width={50} height={50} />
+        <p className='text-2xl font-semibold flex-1/2'>
           School Management System
         </p>
         <div className='flex items-center space-x-4'>

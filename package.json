@@ -13,12 +13,14 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/chart.js": "^4.0.1",
     "chart.js": "^4.4.9",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

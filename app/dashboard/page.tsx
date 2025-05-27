@@ -1,22 +1,17 @@
 import DashboardStats from '@/dashboard/components/DashboardStats'
 import ExamResultChart from '@/dashboard/components/ExamResultChart'
 import StarStudents from '@/dashboard/components/StarStudents'
-import Header from '@/shared/components/Header'
-import Sidebar from '@/shared/components/Sidebar'
 import React from 'react'
 
-export default function Dashboard() {
+export default function DashboardPage() {
+
   return (
     <div className="min-h-screen bg-gray-50">
-    <Sidebar />
-    <Header />
-    
-    <main className="ml-32 pt-16 p-6">
       <div className="max-w-7xl mx-auto mt-8">
         <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
-        
+
         <DashboardStats />
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
           <ExamResultChart />
           <div className="bg-white p-6 rounded-xl shadow-sm">
@@ -75,12 +70,11 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-6">
           <StarStudents />
         </div>
       </div>
-    </main>
-  </div>
+    </div>
   )
 }

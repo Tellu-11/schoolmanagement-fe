@@ -16,9 +16,9 @@ export const MENU_ITEMS: MenuItem[] = [
     label: 'Academic Settings',
     roles: ['admin', 'lecture'],
     subItems: [
-      { icon: '📝', label: 'Course Management', path: '/academic/course', roles: ['admin', 'lecture'] },
-      { icon: '🏫', label: 'Class Management', path: '/academic/class', roles: ['admin', 'lecture'] },
-      { icon: '📊', label: 'Grade Management', path: '/academic/grade', roles: ['admin', 'lecture'] }
+      { icon: '📝', label: 'Course Management', path: '/dashboard/academic/course', roles: ['admin', 'lecture'] },
+      { icon: '🏫', label: 'Class Management', path: '/dashboard/academic/class', roles: ['admin', 'lecture'] },
+      { icon: '📊', label: 'Grade Management', path: '/dashboard/academic/grade', roles: ['admin', 'lecture'] }
     ],
     isOpen: false
   },

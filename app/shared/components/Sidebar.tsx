@@ -29,13 +29,13 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside className="w-80 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
-      <div className="p-4 pt-12">
+      <div className="p-4 pt-12 h-full relative">
         <div className="flex items-center justify-center">
           <img src="/image/GraduationCap.png" alt="" height={45} width={45} className="mr-2" />
           <h1 className="text-5xl text-center text-blue-950 font-bold">SMS</h1>
         </div>
         <p className="text-base text-center text-gray-500 font-medium mb-8">School Management System</p>
-        <nav>
+        <nav className="mb-32">
           {MENU_ITEMS.map((item, index) => (
             <div key={index} className="mb-2">
               <button
@@ -85,6 +85,30 @@ const Sidebar: React.FC = () => {
             </div>
           ))}
         </nav>
+        <div className="absolute bottom-4 left-0 right-0 px-4">
+          <button
+            onClick={() => { }}
+            className={`flex w-full items-center justify-between p-3 text-base font-semibold rounded-lg transition-colors
+                  text-gray-500 hover:bg-purple-50
+                `}
+          >
+            <div className="flex items-center">
+              <span className="mr-3">⚙️</span>
+              <span>Settings</span>
+            </div>
+          </button>
+          <button
+            onClick={() => { }}
+            className={`flex w-full items-center justify-between p-3 text-base font-semibold rounded-lg transition-colors
+                  text-gray-500 hover:bg-purple-50
+                `}
+          >
+            <div className="flex items-center">
+              <span className="mr-3">🚪</span>
+              <span>Logout</span>
+            </div>
+          </button>
+        </div>
       </div>
     </aside>
   );

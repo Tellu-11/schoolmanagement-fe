@@ -13,6 +13,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@flaticon/flaticon-uicons": "^3.3.1",
     "@reduxjs/toolkit": "^2.8.2",
     "@types/chart.js": "^4.0.1",
     "chart.js": "^4.4.9",

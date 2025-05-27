@@ -8,20 +8,19 @@ interface MenuItem {
 }
 
 export const MENU_ITEMS: MenuItem[] = [
-  { icon: '🏠', label: 'Dashboard', path: '/dashboard', roles: ['admin', 'student', 'lecture'] },
-  { icon: '👨‍🏫', label: 'Lecturer Management', path: '/dashboard/lecturer', roles: ['admin', 'lecture'] },
-  { icon: '🎓', label: 'Student Management', path: '/dashboard/student', roles: ['admin', 'student', 'lecture'] },
+  { icon: 'fi fi-sr-chart-pie-alt', label: 'Dashboard', path: '/dashboard', roles: ['admin', 'student', 'lecture'] },
+  { icon: 'fi fi-br-workshop', label: 'Lecturer Management', path: '/dashboard/lecturer', roles: ['admin', 'lecture'] },
+  { icon: 'fi fi-br-users-alt', label: 'Student Management', path: '/dashboard/student', roles: ['admin', 'student', 'lecture'] },
   {
-    icon: '📚',
+    icon: 'fi fi-br-settings-sliders',
     label: 'Academic Settings',
     roles: ['admin', 'lecture'],
     subItems: [
-      { icon: '📝', label: 'Course Management', path: '/dashboard/academic/course', roles: ['admin', 'lecture'] },
-      { icon: '🏫', label: 'Class Management', path: '/dashboard/academic/class', roles: ['admin', 'lecture'] },
-      { icon: '📊', label: 'Grade Management', path: '/dashboard/academic/grade', roles: ['admin', 'lecture'] }
+      { icon: 'fi fi-rs-book-bookmark', label: 'Course Management', path: '/academic/course', roles: ['admin', 'lecture'] },
+      { icon: 'fi fi-rr-school', label: 'Class Management', path: '/academic/class', roles: ['admin', 'lecture'] },
+      { icon: 'fi fi-rr-test', label: 'Grade Management', path: '/academic/grade', roles: ['admin', 'lecture'] }
     ],
     isOpen: false
   },
-  { icon: '📅', label: 'Study Plan Management', path: '/dashboard/studyPlan', roles: ['admin', 'lecture'] },
-  { icon: '📈', label: 'Monitoring', path: '/monitoring', roles: ['admin', 'student'] }
+  { icon: 'fi fi-br-book-alt', label: 'Study Plan Management', path: '/dashboard/studyPlan', roles: ['admin', 'lecture'] }
 ];

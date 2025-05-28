@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MENU_ITEMS } from '@/config/navigation';
 import { useRouter, usePathname } from 'next/navigation';
 import '@flaticon/flaticon-uicons/css/all/all.css';
@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Sidebar: React.FC = () => {
-  const [openMenus, setOpenMenus] = React.useState<{ [key: number]: boolean }>({});
+  const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({});
   const router = useRouter();
   const pathname = usePathname();
 

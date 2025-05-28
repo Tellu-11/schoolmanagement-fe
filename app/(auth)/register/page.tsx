@@ -54,9 +54,14 @@ export default function RegisterPage() {
         data.password
       );
       console.log("Registration successful:", responseData);
-      window.location.href = "/login";
+      window.location.href = "/dashboard";
     } catch (error) {
       console.error("Something went wrong:", error);
+      alert(
+        `Registration failed. ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     }
   };
 

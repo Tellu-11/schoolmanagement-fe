@@ -21,7 +21,7 @@ const register = async (
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || "Registrasi gagal");
+    throw new Error(errorData.message || "Failed to register");
   }
 
   return response.json();

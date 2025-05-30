@@ -1,28 +1,42 @@
 "use client";
+import "@flaticon/flaticon-uicons/css/all/all.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import "@flaticon/flaticon-uicons/css/all/all.css";
-import { useState } from "react";
+import { register } from "./service/register-service";
 
 const formSchema = z.object({
-  role: z.enum(["select-role", "student", "teacher"]),
-  identifier: z.string().min(3, "Minimal 3 karakter"),
-  name: z.string().min(3, "Minimal 3 karakter"),
-  password: z.string().min(6, "Minimal 6 karakter"),
-  agreement: z.boolean().refine((val) => val, "Harus menyetujui persyaratan"),
+  roleId: z
+    .enum(["select-role", "student", "lecturer"])
+    .refine((val) => ["student", "lecturer"].includes(val), {
+      message: "Please select a role",
+    }),
+  id: z
+    .string()
+    .nonempty("ID cannot be blank")
+    .max(20, "Max. 20 characters long"),
+  name: z.string().nonempty("Name cannot be blank"),
+  password: z.string().nonempty("Password cannot be blank"),
+  agreement: z
+    .boolean()
+    .refine((val) => val, "You must agree to the terms and conditions"),
 });
 
 export default function RegisterPage() {
   type FormValues = z.infer<typeof formSchema>;
 
-  const { control, handleSubmit } = useForm<FormValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      role: "select-role",
-      identifier: "",
+      roleId: "select-role",
+      id: "",
       name: "",
       password: "",
       agreement: false,
@@ -31,11 +45,24 @@ export default function RegisterPage() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: FormValues) => {
-    if (data.agreement !== true) {
-      console.error("You must agree to the terms and conditions.");
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const responseData = await register(
+        data.roleId,
+        data.id,
+        data.name,
+        data.password
+      );
+      console.log("Registration successful:", responseData);
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.error("Something went wrong:", error);
+      alert(
+        `Registration failed. ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     }
-    console.log(data);
   };
 
   return (
@@ -50,7 +77,7 @@ export default function RegisterPage() {
         />
       </div>
 
-      <div className="w-full lg:w-1/2 p-14 max-w-xl mx-auto">
+      <div className="w-full lg:w-1/2 p-8 mx-auto">
         <h1 className="text-3xl font-semibold text-black text-center mb-6">
           Don&apos;t have an account?
         </h1>
@@ -59,65 +86,105 @@ export default function RegisterPage() {
           platform.
         </h3>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
-          <h2 className="text-md text-black mb-4">Role</h2>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6 flex flex-col items-center"
+        >
+          <div className="w-96 m-0">
+            <h2 className="text-sm text-black mb-2">Role</h2>
+          </div>
           <Controller
-            name="role"
+            name="roleId"
             control={control}
             render={({ field }) => (
-              <select
-                {...field}
-                className="w-full p-3 border rounded-lg focus:ring-1 focus:ring-black"
-              >
-                <option value="select-role">Select Role</option>
-                <option value="student">Student</option>
-                <option value="teacher">Lecturer</option>
-              </select>
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <select
+                    {...field}
+                    className="w-96 p-3 border rounded-lg focus:ring-1 focus:ring-black"
+                  >
+                    <option value="select-role">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="lecturer">Lecturer</option>
+                  </select>
+                </div>
+                {errors.roleId?.message != null ? (
+                  <p className="text-red-500 text-sm">
+                    {errors.roleId.message}
+                  </p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
+              </div>
             )}
           />
 
-          <h2 className="text-md text-black mb-4">NIM / NIP</h2>
+          <div className="w-96 m-0">
+            <h2 className="text-sm text-black mb-2">NIP / NIM</h2>
+          </div>
           <Controller
-            name="identifier"
+            name="id"
             control={control}
             render={({ field }) => (
-              <input
-                {...field}
-                placeholder="NIM / NIP"
-                className="w-full p-3 border rounded-lg focus:ring-1 focus:ring-black"
-              />
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <input
+                    {...field}
+                    placeholder="NIM / NIP"
+                    className="w-96 p-3 border rounded-lg focus:ring-1 focus:ring-black"
+                  />
+                </div>
+                {errors.id?.message != null ? (
+                  <p className="text-red-500 text-sm">{errors.id.message}</p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
+              </div>
             )}
           />
 
-          <h2 className="text-md text-black mb-4">Name</h2>
+          <div className="w-96 m-0">
+            <h2 className="text-sm text-black mb-2">Name</h2>
+          </div>
           <Controller
             name="name"
             control={control}
             render={({ field }) => (
-              <input
-                {...field}
-                placeholder="Name"
-                className="w-full p-3 border rounded-lg focus:ring-1 focus:ring-black"
-              />
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <input
+                    {...field}
+                    placeholder="Name"
+                    className="w-96 p-3 border rounded-lg focus:ring-1 focus:ring-black"
+                  />
+                </div>
+                {errors.name?.message != null ? (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
+              </div>
             )}
           />
 
-          <h2 className="text-md text-black mb-4">Password</h2>
+          <div className="w-96 m-0">
+            <h2 className="text-sm text-black mb-2">Password</h2>
+          </div>
           <Controller
             name="password"
             control={control}
             render={({ field }) => (
-              <div className="relative">
+              <div className="relative space-y-2 justi">
                 <input
                   {...field}
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
-                  className="w-full p-3 border rounded-lg focus:ring-1 focus:ring-black pr-10"
+                  className="w-96 p-3 border rounded-lg focus:ring-1 focus:ring-black pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                  className="absolute right-3 top-2/5 -translate-y-1/2 h-full"
                 >
                   <i
                     className={`fi fi-br-eye${
@@ -125,6 +192,13 @@ export default function RegisterPage() {
                     } text-gray-500`}
                   />
                 </button>
+                {errors.password?.message != null ? (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
               </div>
             )}
           />
@@ -133,35 +207,46 @@ export default function RegisterPage() {
             name="agreement"
             control={control}
             render={({ field }) => (
-              <div className="flex items-center space-x-2">
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    className="peer hidden"
-                    id="agreement-checkbox"
-                    checked={field.value}
-                    onChange={(e) => field.onChange(e.target.checked)}
-                  />
-                  <label
-                    htmlFor="agreement-checkbox"
-                    className="w-5 h-5 border border-black rounded-full flex items-center justify-center cursor-pointer peer-checked:bg-black peer-checked:text-white transition-colors"
-                  >
-                    <i className="fi fi-br-check text-xs text-white"></i>
-                  </label>
+              <div>
+                <div className="flex items-center justify-center">
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      className="peer hidden"
+                      id="agreement-checkbox"
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                    />
+                    <label
+                      htmlFor="agreement-checkbox"
+                      className="w-5 h-5 mr-2 border border-black rounded-full flex items-center justify-center cursor-pointer peer-checked:bg-black peer-checked:text-white transition-colors"
+                    >
+                      <i className="fi fi-br-check text-xs text-white"></i>
+                    </label>
+                  </div>
+                  <span className="text-md">
+                    I agree to the terms and privacy policy.
+                  </span>
                 </div>
-                <span className="text-md">
-                  I agree to the terms and privacy policy.
-                </span>
+                {errors.agreement?.message != null ? (
+                  <p className="text-red-500 text-sm">
+                    {errors.agreement.message}
+                  </p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
               </div>
             )}
           />
 
-          <button
-            type="submit"
-            className="w-full bg-[#F77C7C] text-lg text-black py-5 px-6 rounded-lg transition-colors hover:bg-red-500 cursor-pointer"
-          >
-            Sign Up
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="w-96 bg-[#F77C7C] text-black py-4 px-5 rounded-lg transition-colors hover:bg-red-500 cursor-pointer"
+            >
+              Sign Up
+            </button>
+          </div>
         </form>
 
         <p className="mt-8 text-center text-md">

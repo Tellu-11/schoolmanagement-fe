@@ -1,38 +1,56 @@
 "use client";
 
+import "@flaticon/flaticon-uicons/css/all/all.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import "@flaticon/flaticon-uicons/css/all/all.css";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { login } from "./service/login-service";
 
 const formSchema = z.object({
-    identifier: z.string().nonempty("NIP/NIM is required"),
-    password: z.string().min(6, "Minimum 6 characters"),
-    });
+  id: z
+    .string()
+    .nonempty("ID cannot be blank")
+    .max(15, "Max ID is 15 characters"),
+  password: z.string().nonempty("Password cannot be blank"),
+});
 
 export default function LoginPage() {
   type FormValues = z.infer<typeof formSchema>;
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      identifier: "",
+      id: "",
       password: "",
     },
   });
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const responseData = await login(data.id, data.password);
+      console.log("Login successful:", responseData);
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.error("Something went wrong:", error);
+      alert(
+        `Login failed. ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
+    }
   };
 
   return (
     <div className="min-h-screen flex">
-      {/* Kiri */}
       <div className="w-1/2 bg-[#D9D9D9] relative hidden lg:flex">
         <Image
           src="/image/login-page.webp"
@@ -43,98 +61,118 @@ export default function LoginPage() {
         />
       </div>
 
-      {/* Kanan */}
-        <div className="w-1/2 relative lg:w-1/2 p-14 max-w-xl mx-auto flex flex-col min-h-screen">
+      <div className="w-full lg:w-1/2 p-8 pb-24 mx-auto relative">
+        <h1 className="text-3xl font-semibold text-black text-center mt-8 mb-6">
+          Welcome Back!
+        </h1>
+        <h3 className="text-md text-black text-center">
+          Easily monitor and manage your academic activities.
+        </h3>
+        <h3 className="text-md text-black text-center mb-8">
+          Sign in and get started!
+        </h3>
 
-        <div className="absolute w-24 h-24 bg-blue-200 rounded-full top-10 right-10 z-0"></div>
-        <div className="absolute w-16 h-16 bg-red-300 rounded-full top-36 left-10 z-0"></div>
-        <div className="absolute w-20 h-20 bg-green-200 rounded-full bottom-24 right-16 z-0"></div>
-        <div className="absolute w-12 h-12 bg-purple-200 rounded-full bottom-25 left-1/2 transform -translate-x-1/2 z-0"></div>
-
-        <div className="flex-grow flex flex-col justify-center">
-          <h1 className="text-3xl font-semibold text-black text-center mb-6">
-            Welcome Back!
-          </h1>
-          <h3 className="text-md text-black text-center">
-            Easily monitor and manage your academic activities.
-          </h3>
-          <h3 className="text-md text-black text-center mb-8">
-            Sign in and get started!
-          </h3>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                NIP / NIM
-              </label>
-              <input
-              {...register("identifier", {
-              required: "NIP/NIM is required",
-              pattern: {
-              value: /^[0-9]+$/,
-              message: "NIP/NIM must contain only numbers",
-                },
-              })}
-              type="text"
-              onKeyDown={(e) => {
-                if (!/[0-9]/.test(e.key) && e.key !== "Backspace" && e.key !== "Tab") {
-                e.preventDefault();
-                  }
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                placeholder="Enter your NIP or NIM"
-              />
-              {errors.identifier && (
-                <p className="text-red-500 text-sm mt-1">{errors.identifier.message}</p>
-              )}
-            </div>
-
-            <div className="relative">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <div className="relative">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6 flex flex-col items-center"
+        >
+          {/* Decorative Circles */}
+          <div className="absolute inset-0 -z-10">
+            <div className="w-20 h-20 bg-red-300 opacity-70 rounded-full absolute top-[25vh] left-[14vw]"></div>
+            <div className="w-20 h-20 bg-blue-300 opacity-70 rounded-full absolute top-[12vh] left-[30vw]"></div>
+            <div className="w-24 h-24 bg-green-300 opacity-70 rounded-full absolute top-[55vh] left-[28vw]"></div>
+            <div className="w-10 h-10 bg-purple-300 opacity-70 rounded-full absolute top-[70vh] left-[20vw]"></div>
+          </div>
+          <div className="w-96 m-0">
+            <h2 className="text-sm text-black mb-2">NIP / NIM</h2>
+          </div>
+          <Controller
+            name="id"
+            control={control}
+            render={({ field }) => (
+              <div className="space-y-2 w-96">
                 <input
-                  {...register("password")}
+                  {...field}
+                  onKeyDown={(e) => {
+                    if (
+                      !/[0-9]/.test(e.key) &&
+                      e.key !== "Backspace" &&
+                      e.key !== "Tab"
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                  placeholder="NIP / NIM"
+                  className="w-full p-3 border rounded-lg focus:ring-1 focus:ring-black bg-white"
+                />
+                {errors.id?.message != null ? (
+                  <p className="text-red-500 text-sm">{errors.id.message}</p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
+              </div>
+            )}
+          />
+
+          <div className="w-96 m-0">
+            <h2 className="text-sm text-black mb-2">Password</h2>
+          </div>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <div className="relative space-y-2 w-96">
+                <input
+                  {...field}
                   type={showPassword ? "text" : "password"}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  placeholder="Enter your password"
+                  placeholder="Password"
+                  className="w-full p-3 border rounded-lg focus:ring-1 focus:ring-black pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                  className="absolute right-3 top-2/5 -translate-y-1/2 h-full"
                 >
-                  <i className={`fi ${showPassword ? 'fi-rr-eye' : 'fi-rr-eye-crossed'}`}></i>
+                  <i
+                    className={`fi fi-br-eye${
+                      showPassword ? "" : "-crossed"
+                    } text-gray-500`}
+                  />
                 </button>
+                {errors.password?.message != null ? (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                ) : (
+                  <p className="pt-5"></p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-              )}
-            </div>
+            )}
+          />
 
-            <div className="flex items-center justify-between">
-              <Link
-                href="/forgot-password"
-                className="text-sm text-blue-600 hover:text-blue-800"
-              >
-                Forgot Password?
-              </Link>
-            </div>
+          <div className="flex justify-end w-96">
+            <Link
+              href="/forgot-password"
+              className="text-sm text-blue-600 hover:text-blue-800"
+            >
+              Forgot Password?
+            </Link>
+          </div>
 
+          <div className="flex justify-center">
             <button
               type="submit"
-              className="w-full bg-[#F77C7C] text-base text-black py-4 px-5 rounded-lg transition-colors hover:bg-red-500 cursor-pointer"
+              className="w-96 bg-[#F77C7C] text-black py-4 px-5 rounded-lg transition-colors hover:bg-red-500 cursor-pointer"
             >
               Sign In
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
 
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Don't have an account?{" "}
-          <Link href="/register" className="text-blue-600 hover:text-blue-800">
-            Sign up
+        <p className="absolute bottom-16 left-0 w-full text-center text-md">
+          Don&apos;t have an account?{" "}
+          <Link href="/register" className="text-blue-600 hover:underline">
+            Sign up!
           </Link>
         </p>
       </div>

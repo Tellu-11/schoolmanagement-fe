@@ -17,7 +17,7 @@ const formSchema = z.object({
   id: z
     .string()
     .nonempty("ID cannot be blank")
-    .max(20, "Max. 20 characters long"),
+    .max(15, "Max ID is 15 characters"),
   name: z.string().nonempty("Name cannot be blank"),
   password: z.string().nonempty("Password cannot be blank"),
   agreement: z
@@ -130,7 +130,16 @@ export default function RegisterPage() {
                 <div className="flex justify-center">
                   <input
                     {...field}
-                    placeholder="NIM / NIP"
+                    onKeyDown={(e) => {
+                      if (
+                        !/[0-9]/.test(e.key) &&
+                        e.key !== "Backspace" &&
+                        e.key !== "Tab"
+                      ) {
+                        e.preventDefault();
+                      }
+                    }}
+                    placeholder="NIP / NIM"
                     className="w-96 p-3 border rounded-lg focus:ring-1 focus:ring-black"
                   />
                 </div>

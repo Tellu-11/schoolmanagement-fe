@@ -8,6 +8,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { login } from "./service/login-service";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   id: z
@@ -32,15 +33,16 @@ export default function LoginPage() {
     },
   });
 
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const responseData = await login(data.id, data.password);
-      console.log("Login successful:", responseData);
-      window.location.href = "/dashboard";
+      await login(data.id, data.password);
+      router.push("/");
     } catch (error) {
-      console.error("Something went wrong:", error);
+      console.debug("Login failed:", error);
       alert(
         `Login failed. ${
           error instanceof Error ? error.message : "Unknown error"

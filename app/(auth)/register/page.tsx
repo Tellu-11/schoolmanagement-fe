@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { register } from "./service/register-service";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   roleId: z
@@ -43,20 +44,16 @@ export default function RegisterPage() {
     },
   });
 
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const responseData = await register(
-        data.roleId,
-        data.id,
-        data.name,
-        data.password
-      );
-      console.log("Registration successful:", responseData);
-      window.location.href = "/dashboard";
+      await register(data.roleId, data.id, data.name, data.password);
+      router.push("/");
     } catch (error) {
-      console.error("Something went wrong:", error);
+      console.debug("Something went wrong:", error);
       alert(
         `Registration failed. ${
           error instanceof Error ? error.message : "Unknown error"

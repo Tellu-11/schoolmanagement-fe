@@ -1,23 +1,19 @@
+import { apiCall } from "@/config/apiCall";
+
 const login = async (id: string, password: string) => {
   const payload = {
     nip: id,
     password: password,
   };
 
-  const response = await fetch("http://localhost:8080/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const response = await apiCall.postRequest("/auth/login", payload);
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to login");
+  const token = response.data?.token;
+  if (!token) {
+    throw new Error("Login failed: No token received");
   }
 
-  return response.json();
+  document.cookie = `token=${token}; path=/; secure; samesite=strict`;
 };
 
 export { login };

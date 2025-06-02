@@ -1,3 +1,5 @@
+import { apiCall } from "@/config/apiCall";
+
 const register = async (
   roleId: string,
   id: string,
@@ -11,20 +13,14 @@ const register = async (
     password: password,
   };
 
-  const response = await fetch("http://localhost:8080/api/auth/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
+  const response = await apiCall.postRequest("/auth/register", payload);
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to register");
+  const token = response.data?.token;
+  if (!token) {
+    throw new Error("Register failed: No token received");
   }
 
-  return response.json();
+  document.cookie = `token=${token}; path=/; secure; samesite=strict`;
 };
 
 export { register };

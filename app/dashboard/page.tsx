@@ -1,10 +1,11 @@
-import DashboardStats from '@/dashboard/components/DashboardStats'
-import ExamResultChart from '@/dashboard/components/ExamResultChart'
-import StarStudents from '@/dashboard/components/StarStudents'
-import React from 'react'
+"use client";
+
+import DashboardStats from "@/dashboard/components/DashboardStats";
+import ExamResultChart from "@/dashboard/components/ExamResultChart";
+import StarStudents from "@/dashboard/components/StarStudents";
+import React from "react";
 
 export default function DashboardPage() {
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mt-8">
@@ -49,11 +50,11 @@ export default function DashboardPage() {
               </div>
               <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-purple-200">
                 <div
-                  style={{ width: '70%' }}
+                  style={{ width: "70%" }}
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
                 />
                 <div
-                  style={{ width: '30%' }}
+                  style={{ width: "30%" }}
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
                 />
               </div>
@@ -76,5 +77,5 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

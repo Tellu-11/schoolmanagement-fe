@@ -7,7 +7,7 @@ import "@flaticon/flaticon-uicons/css/all/all.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({});
   const router = useRouter();
   const pathname = usePathname();

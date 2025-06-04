@@ -39,7 +39,7 @@ const Sidebar = () => {
       <div className="p-4 pt-12">
         <Link href={"/dashboard"} className="flex items-center justify-center">
           <Image
-            src={"/image/graduate-hat.png"}
+            src={"/image/graduate-hat.webp"}
             alt="Logo"
             width={50}
             height={50}

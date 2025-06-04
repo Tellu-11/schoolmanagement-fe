@@ -1,8 +1,8 @@
 "use client";
 
-import DashboardStats from "@/dashboard/components/DashboardStats";
-import ExamResultChart from "@/dashboard/components/ExamResultChart";
-import StarStudents from "@/dashboard/components/StarStudents";
+import DashboardStats from "@/dashboard/components/dashboardStats";
+import ExamResultChart from "@/dashboard/components/examResultChart";
+import StarStudents from "@/dashboard/components/starStudents";
 import React from "react";
 
 export default function DashboardPage() {

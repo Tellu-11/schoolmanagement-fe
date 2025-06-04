@@ -1,6 +1,6 @@
-import { apiCall } from "@/config/apiCall";
+import { ApiCall } from "@/config/apiCall";
 
-const getAllUsers = async () => {
+const getAllLecturers = async () => {
   try {
     // Extract the token from cookies
     const token = document.cookie.match(/token=([^;]+)/)?.[1];
@@ -9,21 +9,20 @@ const getAllUsers = async () => {
       throw new Error("Unauthorized access. Please login first.");
     }
 
-    const response = await apiCall.getRequest("/users", token);
-    console.log("Fetched all users:", response);
+    const response = await ApiCall.getRequest("/lecturers", token);
+    console.log("Fetched all lecturers:", response);
 
-    var users = response.data;
-    console.log("Users data:", users);
+    const lecturers = response.data;
 
-    var data = users.map((user: any) => ({
-      nip: user.nip,
-      name: user.name,
-      roleName: user.roles.name,
-      isActive: user.isActive ? "Yes" : "No",
-      createdBy: user.createdBy.name,
-      updatedBy: user.updatedBy.name,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+    const data = lecturers.map((lecturer: any) => ({
+      nip: lecturer.nip,
+      name: lecturer.name,
+      roleName: lecturer.roles.name,
+      isActive: lecturer.isActive ? "Yes" : "No",
+      createdBy: lecturer.createdBy.name,
+      updatedBy: lecturer.updatedBy.name,
+      createdAt: lecturer.createdAt,
+      updatedAt: lecturer.updatedAt,
     }));
 
     return data;
@@ -37,5 +36,3 @@ const getAllUsers = async () => {
     throw error;
   }
 };
-
-export { getAllUsers };

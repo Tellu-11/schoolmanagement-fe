@@ -1,4 +1,4 @@
-import { apiCall } from "@/config/apiCall";
+import { ApiCall } from "@/config/apiCall";
 
 const login = async (id: string, password: string) => {
   const payload = {
@@ -6,7 +6,7 @@ const login = async (id: string, password: string) => {
     password: password,
   };
 
-  const response = await apiCall.postRequest("/auth/login", payload);
+  const response = await ApiCall.postRequest("/auth/login", payload);
 
   const token = response.data?.token;
   if (!token) {

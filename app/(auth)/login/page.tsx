@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import { login } from "./service/login-service";
+import { login } from "./service/loginService";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({

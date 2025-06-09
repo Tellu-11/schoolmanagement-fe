@@ -7,7 +7,7 @@ const headers = (token?: string) => {
   };
 };
 
-const getRequest = async (urlPath: string, token?: string, params?: any) => {
+const getRequest = async (urlPath: string, token?: string) => {
   try {
     const response = await fetch(appConstant.BASE_URL + urlPath, {
       method: "GET",
@@ -85,7 +85,7 @@ const deleteRequest = async (urlPath: string, token?: string) => {
   }
 };
 
-export const apiCall = {
+export const ApiCall = {
   getRequest,
   postRequest,
   putRequest,

@@ -7,7 +7,7 @@ import "@flaticon/flaticon-uicons/css/all/all.css";
 import Image from "next/image";
 import Link from "next/link";
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({});
   const router = useRouter();
   const pathname = usePathname();
@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
       <div className="p-4 pt-12">
         <Link href={"/dashboard"} className="flex items-center justify-center">
           <Image
-            src={"/image/graduate-hat.png"}
+            src={"/image/graduate-hat.webp"}
             alt="Logo"
             width={50}
             height={50}

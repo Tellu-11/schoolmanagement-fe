@@ -1,4 +1,4 @@
-import { apiCall } from "@/config/apiCall";
+import { ApiCall } from "@/config/apiCall";
 
 const register = async (
   roleId: string,
@@ -13,7 +13,7 @@ const register = async (
     password: password,
   };
 
-  const response = await apiCall.postRequest("/auth/register", payload);
+  const response = await ApiCall.postRequest("/auth/register", payload);
 
   const token = response.data?.token;
   if (!token) {

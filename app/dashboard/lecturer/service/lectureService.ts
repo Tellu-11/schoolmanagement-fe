@@ -25,8 +25,12 @@ const getAllLectures = async () => {
         );
 
         return data;
-    } catch (error) {
-        throw error;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        } else {
+            throw new Error("An unknown error occurred.");
+        }
     }
 };
 

@@ -3,7 +3,6 @@ import { User } from "../entity/userEntity";
 import { UserForm } from "../entity/userForm";
 
 const getAllUsers = async () => {
-
   const token = document.cookie.match(/token=([^;]+)/)?.[1];
 
   if (!token) {
@@ -34,7 +33,6 @@ const getAllUsers = async () => {
 };
 
 const createUser = async (user: UserForm) => {
-
   const token = document.cookie.match(/token=([^;]+)/)?.[1];
 
   if (!token) {
@@ -44,11 +42,9 @@ const createUser = async (user: UserForm) => {
   const response = await ApiCall.postRequest("/users", user, token);
   console.log("Created user:", response);
   return response.data;
-
-}
+};
 
 const updateUser = async (userId: string, user: UserForm) => {
-
   const token = document.cookie.match(/token=([^;]+)/)?.[1];
 
   if (!token) {
@@ -58,11 +54,9 @@ const updateUser = async (userId: string, user: UserForm) => {
   const response = await ApiCall.putRequest(`/users/${userId}`, user, token);
   console.log("Updated user:", response);
   return response.data;
-
-}
+};
 
 const deleteUser = async (userId: string) => {
-
   const token = document.cookie.match(/token=([^;]+)/)?.[1];
 
   if (!token) {
@@ -72,11 +66,9 @@ const deleteUser = async (userId: string) => {
   const response = await ApiCall.deleteRequest(`/users/${userId}`, token);
   console.log("Deleted user:", response);
   return response.data;
-
-}
+};
 
 const getRoles = async () => {
-
   const token = document.cookie.match(/token=([^;]+)/)?.[1];
 
   if (!token) {
@@ -86,7 +78,24 @@ const getRoles = async () => {
   const response = await ApiCall.getRequest("/roles", token);
   console.log("Roles:", response);
   return response.data;
+};
 
-}
+const getRolesColor = (role: string) => {
+  switch (role) {
+    case "admin":
+      return "bg-[#7A7A7A] text-white";
+    case "lecturer":
+      return "bg-blue-100 text-blue-800";
+    case "student":
+      return "bg-red-100 text-red-800";
+  }
+};
 
-export { getAllUsers, createUser, updateUser, deleteUser, getRoles };
+export {
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  getRoles,
+  getRolesColor,
+};

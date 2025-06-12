@@ -25,7 +25,7 @@ export default function LandingPage() {
               efficiently and effectively.
             </p>
             <div className="mt-8 flex justify-center lg:justify-start space-x-4">
-              <button className="bg-red-400 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-500 transition-colors">
+              <button className="bg-red-400 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-500 transition-colors cursor-pointer">
                 Get Started
               </button>
               <a

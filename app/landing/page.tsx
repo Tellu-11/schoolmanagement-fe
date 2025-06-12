@@ -38,6 +38,8 @@ export default function LandingPage() {
           </div>
           <div className="mt-10 lg:mt-0 flex justify-center">
             <Image
+              height={400}
+              width={400}
               src="/image/landing-image.png"
               alt="School Management System"
               className="w-full max-w-md lg:max-w-lg"

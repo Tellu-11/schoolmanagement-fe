@@ -1,4 +1,3 @@
-import { unknown } from "zod/v4";
 import { appConstant } from "./appConstant";
 
 const headers = (token?: string) => {
@@ -31,7 +30,7 @@ const getRequest = async (urlPath: string, token?: string) => {
   }
 };
 
-const postRequest = async <T extends Object>(
+const postRequest = async <T extends object>(
   urlPath: string,
   body: T,
   token?: string
@@ -59,7 +58,7 @@ const postRequest = async <T extends Object>(
   }
 };
 
-const putRequest = async <T extends Object>(
+const putRequest = async <T extends object>(
   urlPath: string,
   body: T,
   token?: string

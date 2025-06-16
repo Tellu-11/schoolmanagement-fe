@@ -9,6 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { login } from "./service/loginService";
 import { useRouter } from "next/navigation";
+import LoadingOverlay from "@/shared/components/LoadingOverlay";
 
 const formSchema = z.object({
   id: z
@@ -36,19 +37,32 @@ export default function LoginPage() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: FormValues) => {
-    try {
-      await login(data.id, data.password);
-      router.push("/");
-    } catch (error) {
-      console.debug("Login failed:", error);
-      alert(
-        `Login failed. ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
+    setIsLoading(true);
+    for (let i = 1; i <= 3; i++) {
+      try {
+        await login(data.id, data.password);
+        setIsLoading(false);
+        router.push("/");
+        return;
+      } catch (error) {
+        if (error instanceof Error && error.message.includes("JDBC")) {
+          continue;
+        }
+
+        console.debug("Login failed:", error);
+        alert(
+          `Login failed. ${
+            error instanceof Error ? error.message : "Unknown error"
+          }`
+        );
+      }
     }
+
+    setIsLoading(false);
+    alert("Application is currently unavailable. Please try again later.");
   };
 
   return (
@@ -165,11 +179,14 @@ export default function LoginPage() {
             <button
               type="submit"
               className="w-96 bg-[#F77C7C] text-black py-4 px-5 rounded-lg transition-colors hover:bg-red-500 cursor-pointer"
+              disabled={isLoading}
             >
               Sign In
             </button>
           </div>
         </form>
+
+        {isLoading && <LoadingOverlay />}
 
         <p className="absolute bottom-16 left-0 w-full text-center text-md">
           Don&apos;t have an account?{" "}

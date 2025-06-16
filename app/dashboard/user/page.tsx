@@ -34,12 +34,14 @@ export default function UserManagementPage() {
       setUsers(data);
       setError(null);
     } catch (error) {
+      console.log('error nich ' + error);
+
       const errorMessage = handleError(error as Error);
       if (errorMessage.includes('Unauthorized')) {
-        alert('Session expired. Please login again.');
+        alert('Session expired. Please login again. \n ' + errorMessage);
         router.push('/login');
       } else {
-        setError('Failed to load user data');
+        setError(errorMessage);
       }
     } finally {
       setIsLoading(false);
@@ -66,8 +68,12 @@ export default function UserManagementPage() {
   };
 
   useEffect(() => {
-    fetchUsers();
-    fetchRoles();
+    const fetchAll = async () => {
+      await fetchUsers();
+      await fetchRoles();
+    };
+
+    fetchAll();
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -260,9 +266,8 @@ export default function UserManagementPage() {
               {users.map((user, index) => (
                 <tr
                   key={user.nip}
-                  className={`hover:bg-blue-50 transition-colors duration-150 ${
-                    index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
-                  }`}
+                  className={`hover:bg-blue-50 transition-colors duration-150 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                    }`}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-mono text-gray-900">
@@ -285,16 +290,14 @@ export default function UserManagementPage() {
                   </td>
                   <td className="px-6 py-4">
                     <span
-                      className={`inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-xs font-medium ${
-                        user.isActive
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}
+                      className={`inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-xs font-medium ${user.isActive
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-700'
+                        }`}
                     >
                       <div
-                        className={`h-1.5 w-1.5 rounded-full ${
-                          user.isActive ? 'bg-green-500' : 'bg-gray-400'
-                        }`}
+                        className={`h-1.5 w-1.5 rounded-full ${user.isActive ? 'bg-green-500' : 'bg-gray-400'
+                          }`}
                       />
                       {user.isActive ? 'Active' : 'Inactive'}
                     </span>
@@ -444,16 +447,14 @@ export default function UserManagementPage() {
                   </label>
                   <div className="mt-1">
                     <span
-                      className={`inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium ${
-                        selectedUser.isActive
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}
+                      className={`inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium ${selectedUser.isActive
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-700'
+                        }`}
                     >
                       <div
-                        className={`h-1.5 w-1.5 rounded-full ${
-                          selectedUser.isActive ? 'bg-green-500' : 'bg-gray-400'
-                        }`}
+                        className={`h-1.5 w-1.5 rounded-full ${selectedUser.isActive ? 'bg-green-500' : 'bg-gray-400'
+                          }`}
                       />
                       {selectedUser.isActive ? 'Active' : 'Inactive'}
                     </span>

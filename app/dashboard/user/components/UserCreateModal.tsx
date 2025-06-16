@@ -12,9 +12,9 @@ interface UserCreateModalProps {
 export default function UserCreateModal({ isOpen, onClose, onSuccess, roles }: UserCreateModalProps) {
     const [formData, setFormData] = useState({
         nip: "",
-        password: "",
+        password: "123456",
         name: "",
-        roles: 0,
+        roles: 1,
         isActive: true,
         createdBy: 1,
         updatedBy: 1,
@@ -53,12 +53,13 @@ export default function UserCreateModal({ isOpen, onClose, onSuccess, roles }: U
             await createUser(formData);
             onSuccess();
             onClose();
+            alert("Success create user " + formData.nip);
             // Reset form
             setFormData({
                 nip: "",
                 password: "",
                 name: "",
-                roles: 0,
+                roles: 1,
                 isActive: true,
                 createdBy: 1,
                 updatedBy: 1,
@@ -83,7 +84,7 @@ export default function UserCreateModal({ isOpen, onClose, onSuccess, roles }: U
                 nip: "",
                 password: "",
                 name: "",
-                roles: 0,
+                roles: 1,
                 isActive: true,
                 createdBy: 1,
                 updatedBy: 1,

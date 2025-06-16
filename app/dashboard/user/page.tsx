@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Role, User } from "./entity/userEntity";
+import { useEffect, useState } from 'react';
+import { Role, User } from './entity/userEntity';
 import {
   getAllUsers,
   deleteUser,
   getRoles,
   getRolesColor,
-} from "./service/userService";
-import { useRouter } from "next/navigation";
-import { handleError } from "@/shared/utils/errorUtils";
-import { formatDate } from "@/shared/utils/dateUtils";
-import UserCreateModal from "./components/UserCreateModal";
-import UserEditModal from "./components/UserEditModal";
+} from './service/userService';
+import { useRouter } from 'next/navigation';
+import { handleError } from '@/shared/utils/errorUtils';
+import { formatDate } from '@/shared/utils/dateUtils';
+import UserCreateModal from './components/UserCreateModal';
+import UserEditModal from './components/UserEditModal';
 
 export default function UserManagementPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -35,11 +35,11 @@ export default function UserManagementPage() {
       setError(null);
     } catch (error) {
       const errorMessage = handleError(error as Error);
-      if (errorMessage.includes("Unauthorized")) {
-        alert("Session expired. Please login again.");
-        router.push("/login");
+      if (errorMessage.includes('Unauthorized')) {
+        alert('Session expired. Please login again.');
+        router.push('/login');
       } else {
-        setError("Failed to load user data");
+        setError('Failed to load user data');
       }
     } finally {
       setIsLoading(false);
@@ -54,11 +54,11 @@ export default function UserManagementPage() {
       setError(null);
     } catch (error) {
       const errorMessage = handleError(error as Error);
-      if (errorMessage.includes("Unauthorized")) {
-        alert("Session expired. Please login again.");
-        router.push("/login");
+      if (errorMessage.includes('Unauthorized')) {
+        alert('Session expired. Please login again.');
+        router.push('/login');
       } else {
-        setError("Failed to load Roles");
+        setError('Failed to load Roles');
       }
     } finally {
       setIsLoading(false);
@@ -71,14 +71,14 @@ export default function UserManagementPage() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this user?")) {
+    if (confirm('Are you sure you want to delete this user?')) {
       try {
         setDeleteLoading(id);
         await deleteUser(id);
         await fetchUsers();
       } catch (error: unknown) {
         if (error instanceof Error) {
-          alert("Failed to delete user " + error.message);
+          alert('Failed to delete user ' + error.message);
         }
       } finally {
         setDeleteLoading(null);
@@ -261,7 +261,7 @@ export default function UserManagementPage() {
                 <tr
                   key={user.nip}
                   className={`hover:bg-blue-50 transition-colors duration-150 ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                   }`}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -287,16 +287,16 @@ export default function UserManagementPage() {
                     <span
                       className={`inline-flex items-center gap-x-1.5 rounded-full px-3 py-1 text-xs font-medium ${
                         user.isActive
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-100 text-gray-700"
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-gray-100 text-gray-700'
                       }`}
                     >
                       <div
                         className={`h-1.5 w-1.5 rounded-full ${
-                          user.isActive ? "bg-green-500" : "bg-gray-400"
+                          user.isActive ? 'bg-green-500' : 'bg-gray-400'
                         }`}
                       />
-                      {user.isActive ? "Active" : "Inactive"}
+                      {user.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </td>
                   <td className="px-6 py-4">
@@ -446,16 +446,16 @@ export default function UserManagementPage() {
                     <span
                       className={`inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium ${
                         selectedUser.isActive
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-100 text-gray-700"
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-gray-100 text-gray-700'
                       }`}
                     >
                       <div
                         className={`h-1.5 w-1.5 rounded-full ${
-                          selectedUser.isActive ? "bg-green-500" : "bg-gray-400"
+                          selectedUser.isActive ? 'bg-green-500' : 'bg-gray-400'
                         }`}
                       />
-                      {selectedUser.isActive ? "Active" : "Inactive"}
+                      {selectedUser.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </div>
                 </div>

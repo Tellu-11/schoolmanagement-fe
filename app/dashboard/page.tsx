@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import DashboardStats from "@/dashboard/components/dashboardStats";
-import ExamResultChart from "@/dashboard/components/examResultChart";
-import StarStudents from "@/dashboard/components/starStudents";
-import React from "react";
+import ExamResultChart from '@/dashboard/components/ExamResultChart';
+import StarStudents from '@/dashboard/components/StarStudents';
+import React from 'react';
+import DashboardStats from './components/DashboardStats';
 
 export default function DashboardPage() {
   return (
@@ -50,11 +50,11 @@ export default function DashboardPage() {
               </div>
               <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-purple-200">
                 <div
-                  style={{ width: "70%" }}
+                  style={{ width: '70%' }}
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
                 />
                 <div
-                  style={{ width: "30%" }}
+                  style={{ width: '30%' }}
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
                 />
               </div>

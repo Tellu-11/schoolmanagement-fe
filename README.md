@@ -4,23 +4,26 @@ This is the frontend for [School Management](https://github.com/Tellu-11/schoolm
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
-
+- [Makefile](#make-installation)
 - [Node.js](https://nodejs.org/en/download)
-- npm or yarn or pnpm or bun (personally I use [pnpm](https://pnpm.io/installation))
+- [pnpm](https://pnpm.io/installation)
 
-### Start the application
+## Start the application
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Make Installation
+
+Since we will be using Makefile to run the application, you need to install it first:
+
+- On Windows, you can install it using [Chocolatey](https://chocolatey.org/install).
+  After installing Chocolatey, you can run `choco install make` to install Makefile.
+- On Linux, you can install it using `sudo apt-get install make`.
+
+And then run:
+
+```
+make run
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
